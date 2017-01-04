@@ -1,0 +1,15 @@
+{
+    "name": "inextends/tamandua",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Anne-Lise Lambin",
+            "email": "annelise.lambin@gmail.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "^3.0",
+        "robmorgan/phinx": "^0.6.5",
+        "illuminate/database": "~5.1"
+    }
+}
