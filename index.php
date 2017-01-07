@@ -24,5 +24,6 @@ $app->get('/hello', function(Request $request, Response $response) {
 });
 
 $app->post('/users', 'Inextends\Tamandua\APIController:register');
+$app->post('/users/login', 'Inextends\Tamandua\APIController:login');
 
 $app->run();

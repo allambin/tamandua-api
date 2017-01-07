@@ -7,6 +7,7 @@ class ErrorCodesCollection
     private $errors = [
         400101 => 'User not authenticated',
         400102 => 'Unauthorized action',
+        400103 => 'Login failed',
         400201 => 'Email field is missing',
         400202 => 'Password field is missing',
         400301 => 'Email field is invalid',
