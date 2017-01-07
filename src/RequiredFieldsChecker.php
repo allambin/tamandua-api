@@ -22,7 +22,7 @@ class RequiredFieldsChecker
     {
         foreach ($requiredFields as $fieldName => $errorCode) {
             $found = false;
-            foreach ($args as $key => $value) {
+            foreach ((array) $args as $key => $value) {
                 if ($key == $fieldName) {
                     $found = true;
                     break;

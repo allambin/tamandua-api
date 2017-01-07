@@ -13,6 +13,17 @@ $capsule = new Illuminate\Database\Capsule\Manager;
 $capsule->addConnection($container->get('settings')['db']);
 $capsule->bootEloquent();
 
+$mw = function ($request, $response, $next) {
+    try {
+        Inextends\Tamandua\APIController::isTokenValid($request, $response);
+    } catch (Exception $e) {
+        return \Inextends\Tamandua\ResponseHelper::sendJsonErrorResponse($response, $e);
+    }
+    
+    $response = $next($request, $response);
+    return $response;
+};
+
 // Routing
 $app->get('/', function(Request $request, Response $response) {
     $response->getBody()->write("This is the index.");
@@ -22,6 +33,10 @@ $app->get('/hello', function(Request $request, Response $response) {
     $response->getBody()->write("Hello world!");
     return $response;
 });
+$app->get('/restricted', function(Request $request, Response $response) {
+    $response->getBody()->write("Restricted area");
+    return $response;
+})->add($mw);
 
 $app->post('/users', 'Inextends\Tamandua\APIController:register');
 $app->post('/users/login', 'Inextends\Tamandua\APIController:login');

@@ -7,6 +7,20 @@ use Psr\Http\Message\ResponseInterface;
 
 class APIController
 {
+    public static function isTokenValid(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $parsedBody = (array) $request->getParsedBody();
+        $queryParams = (array) $request->getQueryParams();
+        $params = array_merge($parsedBody, $queryParams);
+
+        $fieldsChecker = new RequiredFieldsChecker();
+        $fieldsChecker->check(['auth_token' => 400102], $params);
+        
+        if(!Authentication::isLoggedIn($params['auth_token'])) {
+            throw new APIException(400102);
+        }
+    }
+    
     public function register(ServerRequestInterface $request, ResponseInterface $response)
     {
         $parsedBody = $request->getParsedBody();

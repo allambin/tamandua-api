@@ -73,4 +73,27 @@ class Authentication
         $message->auth_token = $token->token;
         return $message;
     }
+    
+    /**
+     * 
+     * @param string $token
+     * @return boolean
+     */
+    public static function isLoggedIn($token)
+    {
+        $authToken = AuthToken::where('token', $token)->first();
+        if (empty((array) $authToken)) {
+            return false;
+        }
+        
+        $d = new \DateTime();
+        $d->setTimezone(new \DateTimeZone('Europe/Brussels'));
+        $validityDate = new \DateTime($authToken->valid_until);
+        $validityDate->setTimezone(new \DateTimeZone('Europe/Brussels'));
+        if($d > $validityDate) {
+            return false;
+        }
+        
+        return true;
+    }
 }
