@@ -36,16 +36,19 @@ class ProjectRespository
     /**
      * 
      * @param int $id
+     * @param \Inextends\Tamandua\Models\User $user
      * @param string $extra
      * @return boolean
      * @throws APIException
      */
-    public function update($id, $extra = array()) {
+    public function update($id, Models\User $user, $extra = array()) {
         try {
             $project = Project::where('id', $id)->firstOrFail();
         } catch (\Exception $e) {
             throw new APIException(400401);
         }
+        
+        ErrorHandler::checkIsCreator($project, $user);
         
         if(isset($extra['code']) && $extra['code'] !== $project->code) {
             ErrorHandler::checkFieldValidity('code', $extra['code']);

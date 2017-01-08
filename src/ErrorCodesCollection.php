@@ -8,6 +8,7 @@ class ErrorCodesCollection
         400101 => 'User not authenticated',
         400102 => 'Unauthorized action',
         400103 => 'Login failed',
+        400104 => 'Unauthorized action: you are not the creator of this resource',
         400201 => 'Email field is missing',
         400202 => 'Password field is missing',
         400203 => 'Code field is missing',

@@ -53,4 +53,17 @@ class ErrorHandler
                 break;
         }
     }
+    
+    /**
+     * 
+     * @param object $object
+     * @param \Inextends\Tamandua\Models\User $creator
+     * @return boolean
+     * @throws APIException
+     */
+    public static function checkIsCreator($object, $creator) {
+        if($object->creator_id != $creator->id) {
+            throw new APIException(400104);
+        }
+    }
 }
