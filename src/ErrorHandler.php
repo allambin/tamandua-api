@@ -3,6 +3,7 @@
 namespace Inextends\Tamandua;
 
 use Inextends\Tamandua\Models\User;
+use Inextends\Tamandua\Models\Project;
 use Inextends\Tamandua\APIException;
 
 class ErrorHandler
@@ -19,6 +20,10 @@ class ErrorHandler
             case 'email':
                 if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
                     throw new APIException(400301);
+                }
+            case 'code':
+                if (!preg_match('#^[\w]+$#', $value)) {
+                    throw new APIException(400303);
                 }
             default:
                 break;
@@ -38,6 +43,11 @@ class ErrorHandler
                 $existingUser = User::where('email', $value)->first();
                 if (!empty((array) $existingUser)) {
                     throw new APIException(400302);
+                }
+            case 'code':
+                $existingProject = Project::where('code', $value)->first();
+                if (!empty((array) $existingProject)) {
+                    throw new APIException(400304);
                 }
             default:
                 break;

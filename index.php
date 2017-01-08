@@ -40,5 +40,6 @@ $app->get('/restricted', function(Request $request, Response $response) {
 
 $app->post('/users', 'Inextends\Tamandua\APIController:register');
 $app->post('/users/login', 'Inextends\Tamandua\APIController:login');
+$app->post('/projects', 'Inextends\Tamandua\APIController:createProject')->add($mw);
 
 $app->run();

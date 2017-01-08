@@ -50,4 +50,20 @@ class APIController
             return ResponseHelper::sendJsonErrorResponse($response, $e);
         }
     }
+    
+    public function createProject(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $parsedBody = $request->getParsedBody();
+        $user = UserRepository::getCurrentUserFromToken($parsedBody['auth_token']);
+
+        try {
+            $fieldsChecker = new RequiredFieldsChecker();
+            $fieldsChecker->check(['code' => 400203, 'title' => 400204], $parsedBody);
+            $projectRepo = new ProjectRespository();
+            $data = $projectRepo->create($parsedBody['code'], $parsedBody['title'], $user, $parsedBody);
+            return ResponseHelper::sendJsonResponse($response, $data);
+        } catch (\Exception $e) {
+            return ResponseHelper::sendJsonErrorResponse($response, $e);
+        }
+    }
 }
