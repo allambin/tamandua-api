@@ -66,4 +66,19 @@ class APIController
             return ResponseHelper::sendJsonErrorResponse($response, $e);
         }
     }
+    
+    public function updateProject(ServerRequestInterface $request, ResponseInterface $response, $args)
+    {
+        $parsedBody = $request->getParsedBody();
+
+        try {
+            $fieldsChecker = new RequiredFieldsChecker();
+            $fieldsChecker->check(['id' => 400205], $args);
+            $projectRepo = new ProjectRespository();
+            $data = $projectRepo->update($args['id'], $parsedBody);
+            return ResponseHelper::sendJsonResponse($response, $data);
+        } catch (\Exception $e) {
+            return ResponseHelper::sendJsonErrorResponse($response, $e);
+        }
+    }
 }
