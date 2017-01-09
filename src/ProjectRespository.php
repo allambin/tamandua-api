@@ -15,7 +15,6 @@ class ProjectRespository
         
         foreach (Project::with('creator')->select('id', 'code', 'title', 'description', 'creator_id')->cursor() as $project) {
             $project->creator;
-            unset($project->deleted_at);
             unset($project->creator_id);
             array_push($projects, $project);
         }
