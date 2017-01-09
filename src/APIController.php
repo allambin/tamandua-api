@@ -82,4 +82,20 @@ class APIController
             return ResponseHelper::sendJsonErrorResponse($response, $e);
         }
     }
+    
+    public function deleteProject(ServerRequestInterface $request, ResponseInterface $response, $args)
+    {
+        $parsedBody = $request->getParsedBody();
+        $user = UserRepository::getCurrentUserFromToken($parsedBody['auth_token']);
+
+        try {
+            $fieldsChecker = new RequiredFieldsChecker();
+            $fieldsChecker->check(['id' => 400205], $args);
+            $projectRepo = new ProjectRespository();
+            $data = $projectRepo->delete($args['id'], $user);
+            return ResponseHelper::sendJsonResponse($response, $data);
+        } catch (\Exception $e) {
+            return ResponseHelper::sendJsonErrorResponse($response, $e);
+        }
+    }
 }

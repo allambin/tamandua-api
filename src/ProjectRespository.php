@@ -70,4 +70,29 @@ class ProjectRespository
         
         return true;
     }
+    
+    /**
+     * 
+     * @param int $id
+     * @param \Inextends\Tamandua\Models\User $user
+     * @return boolean
+     * @throws APIException
+     */
+    public function delete($id, Models\User $user) {
+        try {
+            $project = Project::where('id', $id)->firstOrFail();
+        } catch (\Exception $e) {
+            throw new APIException(400401);
+        }
+        
+        ErrorHandler::checkIsCreator($project, $user);
+        
+        try {
+            $project->delete();
+        } catch (\Illuminate\Database\QueryException $e) {
+            throw new APIException(400998, $e->errorInfo[2]);
+        }
+        
+        return true;
+    }
 }

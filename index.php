@@ -42,5 +42,6 @@ $app->post('/users', 'Inextends\Tamandua\APIController:register');
 $app->post('/users/login', 'Inextends\Tamandua\APIController:login');
 $app->post('/projects', 'Inextends\Tamandua\APIController:createProject')->add($mw);
 $app->put('/projects/{id:[0-9]+}', 'Inextends\Tamandua\APIController:updateProject')->add($mw);
+$app->delete('/projects/{id:[0-9]+}', 'Inextends\Tamandua\APIController:deleteProject')->add($mw);
 
 $app->run();
