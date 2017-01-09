@@ -10,4 +10,9 @@ class Project extends \Illuminate\Database\Eloquent\Model
     
     protected $table = 'project';
     protected $dates = ['deleted_at'];
+    
+    public function creator()
+    {
+        return $this->belongsTo('Inextends\Tamandua\Models\User', 'creator_id');
+    }
 }

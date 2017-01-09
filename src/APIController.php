@@ -98,4 +98,15 @@ class APIController
             return ResponseHelper::sendJsonErrorResponse($response, $e);
         }
     }
+    
+    public function getProjects(ServerRequestInterface $request, ResponseInterface $response, $args)
+    {
+        try {
+            $projectRepo = new ProjectRespository();
+            $data = $projectRepo->getAll();
+            return ResponseHelper::sendJsonResponse($response, $data);
+        } catch (\Exception $e) {
+            return ResponseHelper::sendJsonErrorResponse($response, $e);
+        }
+    }
 }
