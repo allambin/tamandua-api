@@ -122,4 +122,17 @@ class APIController
             return ResponseHelper::sendJsonErrorResponse($response, $e);
         }
     }
+    
+    public function getUser(ServerRequestInterface $request, ResponseInterface $response, $args)
+    {
+        try {
+            $fieldsChecker = new RequiredFieldsChecker();
+            $fieldsChecker->check(['id' => 400205], $args);
+            $userRepo = new UserRepository();
+            $data = $userRepo->get($args['id']);
+            return ResponseHelper::sendJsonResponse($response, $data);
+        } catch (\Exception $e) {
+            return ResponseHelper::sendJsonErrorResponse($response, $e);
+        }
+    }
 }

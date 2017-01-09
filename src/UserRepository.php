@@ -19,4 +19,19 @@ class UserRepository
         
         return $user;
     }
+    
+    /**
+     * 
+     * @param int $id
+     * @return Inextends\Tamandua\Models\User
+     * @throws APIException
+     */
+    public function get($id) {
+        try {
+            return User::where('id', $id)
+                         ->firstOrFail();
+        } catch (\Exception $e) {
+            throw new APIException(400401);
+        }
+    }
 }

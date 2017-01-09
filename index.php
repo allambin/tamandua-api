@@ -38,6 +38,7 @@ $app->get('/restricted', function(Request $request, Response $response) {
     return $response;
 })->add($mw);
 
+$app->get('/users/{id:[0-9]+}', 'Inextends\Tamandua\APIController:getUser');
 $app->post('/users', 'Inextends\Tamandua\APIController:register');
 $app->post('/users/login', 'Inextends\Tamandua\APIController:login');
 $app->post('/projects', 'Inextends\Tamandua\APIController:createProject')->add($mw);
