@@ -25,6 +25,25 @@ class ProjectRespository
     
     /**
      * 
+     * @param int $id
+     */
+    public function get($id) {
+        try {
+            $project = Project::with('creator')
+                       ->select('id', 'code', 'title', 'description', 'creator_id')
+                       ->where('id', $id)
+                       ->firstOrFail();
+        } catch (\Exception $e) {
+            throw new APIException(400401);
+        }
+        
+        unset($project->creator_id);
+        
+        return $project;
+    }
+    
+    /**
+     * 
      * @param string $code
      * @param string $title
      * @param \Inextends\Tamandua\Models\User $user
