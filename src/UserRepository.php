@@ -34,4 +34,18 @@ class UserRepository
             throw new APIException(400401);
         }
     }
+    
+    /**
+     * 
+     * @return array
+     */
+    public function getAll() {
+        $users = array();
+        
+        foreach (User::cursor() as $user) {
+            array_push($users, $user);
+        }
+        
+        return $users;
+    }
 }

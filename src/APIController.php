@@ -123,6 +123,17 @@ class APIController
         }
     }
     
+    public function getUsers(ServerRequestInterface $request, ResponseInterface $response, $args)
+    {
+        try {
+            $userRepo = new UserRepository();
+            $data = $userRepo->getAll();
+            return ResponseHelper::sendJsonResponse($response, $data);
+        } catch (\Exception $e) {
+            return ResponseHelper::sendJsonErrorResponse($response, $e);
+        }
+    }
+    
     public function getUser(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
         try {
