@@ -38,14 +38,16 @@ $app->get('/restricted', function(Request $request, Response $response) {
     return $response;
 })->add($mw);
 
-$app->get('/users/{id:[0-9]+}', 'Inextends\Tamandua\APIController:getUser');
-$app->post('/users', 'Inextends\Tamandua\APIController:register');
-$app->get('/users', 'Inextends\Tamandua\APIController:getUsers');
-$app->post('/users/login', 'Inextends\Tamandua\APIController:login');
-$app->post('/projects', 'Inextends\Tamandua\APIController:createProject')->add($mw);
-$app->get('/projects', 'Inextends\Tamandua\APIController:getProjects');
-$app->get('/projects/{id:[0-9]+}', 'Inextends\Tamandua\APIController:getProject');
-$app->put('/projects/{id:[0-9]+}', 'Inextends\Tamandua\APIController:updateProject')->add($mw);
-$app->delete('/projects/{id:[0-9]+}', 'Inextends\Tamandua\APIController:deleteProject')->add($mw);
+$app->group('/api', function() use($app, $mw) {
+    $app->get('/users/{id:[0-9]+}', 'Inextends\Tamandua\APIController:getUser');
+    $app->post('/users', 'Inextends\Tamandua\APIController:register');
+    $app->get('/users', 'Inextends\Tamandua\APIController:getUsers');
+    $app->post('/users/login', 'Inextends\Tamandua\APIController:login');
+    $app->post('/projects', 'Inextends\Tamandua\APIController:createProject')->add($mw);
+    $app->get('/projects', 'Inextends\Tamandua\APIController:getProjects');
+    $app->get('/projects/{id:[0-9]+}', 'Inextends\Tamandua\APIController:getProject');
+    $app->put('/projects/{id:[0-9]+}', 'Inextends\Tamandua\APIController:updateProject')->add($mw);
+    $app->delete('/projects/{id:[0-9]+}', 'Inextends\Tamandua\APIController:deleteProject')->add($mw);
+});
 
 $app->run();
