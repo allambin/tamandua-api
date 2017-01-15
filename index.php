@@ -5,6 +5,8 @@ use Psr\Http\Message\ResponseInterface as Response;
 require_once dirname(__FILE__) . '/config.php';
 require_once dirname(__FILE__) . '/vendor/autoload.php';
 
+Inextends\Tamandua\CORSHelper::cors();
+
 $app = new Slim\App($config);
 
 // Eloquent connection
