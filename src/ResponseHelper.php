@@ -8,13 +8,13 @@ class ResponseHelper
 {
     public static function sendJsonResponse(ResponseInterface $response, $data)
     {
-        $jsonresponse = $response->withHeader('Content-type', 'application/json; charset=utf-8');
+        $jsonresponse = $response->withHeader('Content-type', 'application/json; charset=utf-8')->withStatus(200);
         return $jsonresponse->write(json_encode($data, JSON_PRETTY_PRINT));
     }
 
     public static function sendJsonErrorResponse(ResponseInterface $response, \Exception $e)
     {
-        $jsonresponse = $response->withHeader('Content-type', 'application/json; charset=utf-8');
+        $jsonresponse = $response->withHeader('Content-type', 'application/json; charset=utf-8')->withStatus(401);
         $error = new \stdClass();
         $error->status = 401;
         $error->code = $e->getCode();
