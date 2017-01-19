@@ -9,14 +9,12 @@ class APIController
 {
     public static function isTokenValid(ServerRequestInterface $request, ResponseInterface $response)
     {
-        $parsedBody = (array) $request->getParsedBody();
         $queryParams = (array) $request->getQueryParams();
-        $params = array_merge($parsedBody, $queryParams);
 
         $fieldsChecker = new RequiredFieldsChecker();
-        $fieldsChecker->check(['auth_token' => 400102], $params);
+        $fieldsChecker->check(['auth_token' => 400102], $queryParams);
         
-        if(!Authentication::isLoggedIn($params['auth_token'])) {
+        if(!Authentication::isLoggedIn($queryParams['auth_token'])) {
             throw new APIException(400102);
         }
     }
@@ -54,7 +52,8 @@ class APIController
     public function createProject(ServerRequestInterface $request, ResponseInterface $response)
     {
         $parsedBody = $request->getParsedBody();
-        $user = UserRepository::getCurrentUserFromToken($parsedBody['auth_token']);
+        $queryParams = (array) $request->getQueryParams();
+        $user = UserRepository::getCurrentUserFromToken($queryParams['auth_token']);
 
         try {
             $fieldsChecker = new RequiredFieldsChecker();
@@ -70,7 +69,8 @@ class APIController
     public function updateProject(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
         $parsedBody = $request->getParsedBody();
-        $user = UserRepository::getCurrentUserFromToken($parsedBody['auth_token']);
+        $queryParams = (array) $request->getQueryParams();
+        $user = UserRepository::getCurrentUserFromToken($queryParams['auth_token']);
 
         try {
             $fieldsChecker = new RequiredFieldsChecker();
@@ -86,7 +86,8 @@ class APIController
     public function deleteProject(ServerRequestInterface $request, ResponseInterface $response, $args)
     {
         $parsedBody = $request->getParsedBody();
-        $user = UserRepository::getCurrentUserFromToken($parsedBody['auth_token']);
+        $queryParams = (array) $request->getQueryParams();
+        $user = UserRepository::getCurrentUserFromToken($queryParams['auth_token']);
 
         try {
             $fieldsChecker = new RequiredFieldsChecker();
