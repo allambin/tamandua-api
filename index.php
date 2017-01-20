@@ -50,6 +50,7 @@ $app->group('/api', function() use($app, $mw) {
     $app->get('/projects/{id:[0-9]+}', 'Inextends\Tamandua\APIController:getProject');
     $app->put('/projects/{id:[0-9]+}', 'Inextends\Tamandua\APIController:updateProject')->add($mw);
     $app->delete('/projects/{id:[0-9]+}', 'Inextends\Tamandua\APIController:deleteProject')->add($mw);
+    $app->post('/tasks', 'Inextends\Tamandua\APIController:createTask')->add($mw);
 });
 
 $app->run();

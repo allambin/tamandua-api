@@ -147,4 +147,21 @@ class APIController
             return ResponseHelper::sendJsonErrorResponse($response, $e);
         }
     }
+    
+    public function createTask(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $parsedBody = $request->getParsedBody();
+        $queryParams = (array) $request->getQueryParams();
+        $user = UserRepository::getCurrentUserFromToken($queryParams['auth_token']);
+
+        try {
+            $fieldsChecker = new RequiredFieldsChecker();
+            $fieldsChecker->check(['title' => 400204, 'project_code' => '400206'], $parsedBody);
+            $projectRepo = new TaskRepository();
+            $data = $projectRepo->create($parsedBody['title'], $parsedBody['project_code'], $user, $parsedBody);
+            return ResponseHelper::sendJsonResponse($response, $data);
+        } catch (\Exception $e) {
+            return ResponseHelper::sendJsonErrorResponse($response, $e);
+        }
+    }
 }
