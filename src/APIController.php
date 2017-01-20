@@ -157,8 +157,25 @@ class APIController
         try {
             $fieldsChecker = new RequiredFieldsChecker();
             $fieldsChecker->check(['title' => 400204, 'project_code' => '400206'], $parsedBody);
-            $projectRepo = new TaskRepository();
-            $data = $projectRepo->create($parsedBody['title'], $parsedBody['project_code'], $user, $parsedBody);
+            $taskRepo = new TaskRepository();
+            $data = $taskRepo->create($parsedBody['title'], $parsedBody['project_code'], $user, $parsedBody);
+            return ResponseHelper::sendJsonResponse($response, $data);
+        } catch (\Exception $e) {
+            return ResponseHelper::sendJsonErrorResponse($response, $e);
+        }
+    }
+    
+    public function updateTask(ServerRequestInterface $request, ResponseInterface $response, $args)
+    {
+        $parsedBody = $request->getParsedBody();
+        $queryParams = (array) $request->getQueryParams();
+        $user = UserRepository::getCurrentUserFromToken($queryParams['auth_token']);
+
+        try {
+            $fieldsChecker = new RequiredFieldsChecker();
+            $fieldsChecker->check(['id' => 400205], $args);
+            $taskRepo = new TaskRepository();
+            $data = $taskRepo->update($args['id'], $user, $parsedBody);
             return ResponseHelper::sendJsonResponse($response, $data);
         } catch (\Exception $e) {
             return ResponseHelper::sendJsonErrorResponse($response, $e);
