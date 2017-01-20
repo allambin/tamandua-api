@@ -62,8 +62,10 @@ class ErrorHandler
             if (!isset($values[$name]) || empty($values[$name])) {
                 continue;
             }
-            return self::checkFieldValidity($name, $values[$name]);
+            self::checkFieldValidity($name, $values[$name]);
         }
+        
+        return true;
     }
 
     /**
