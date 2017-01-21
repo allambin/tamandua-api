@@ -24,9 +24,9 @@ class ErrorCodesCollection
         400307 => 'Type field is invalid',
         400308 => 'Date is invalid',
         400309 => 'The end date is set before the start date',
-        400310 => 'A task cannot be moved into another project',
         400401 => 'This ID does not exist',
         400501 => 'A task cannot be assigned to no one',
+        400502 => 'A task cannot be moved into another project',
         400998 => 'SQL error',
         400999 => 'Unknown error',
     ];

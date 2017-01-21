@@ -57,7 +57,7 @@ class TaskRepository
         if(!empty($extra['project_code'])) {
             $project = Project::where('code', $extra['project_code'])->first();
             if($project == null || $project->id != $task->project_id) {
-                throw new APIException(400310);
+                throw new APIException(400502);
             }
         }
 
