@@ -100,6 +100,10 @@ class TaskRepository
             } catch (\Exception $e) {
                 throw new APIException(400401);
             }
+        } else {
+            if(isset($extra['status']) && $extra['status'] == 'assigned') {
+                throw new APIException(400501);
+            }
         }
         
         return true;
