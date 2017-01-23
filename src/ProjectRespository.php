@@ -29,9 +29,18 @@ class ProjectRespository
     public function get($id) {
         try {
             $project = Project::with('creator')
-                       ->select('id', 'code', 'title', 'description', 'creator_id')
-                       ->where('id', $id)
-                       ->firstOrFail();
+                        ->select('id', 'code', 'title', 'description', 'creator_id')
+                        ->with(['tasks' => function($query) {
+                            $query->select(
+                                    'id', 'title', 'description', 'status', 'priority', 'type', 
+                                    'start_date', 'due_date', 'created_at', 'updated_at', 'project_id', 
+                                    'creator_id', 'assigned_to_id'
+                                    )
+                                    ->with('creator')
+                                    ->with('assignee');
+                        }])
+                        ->where('id', $id)
+                        ->firstOrFail();
         } catch (\Exception $e) {
             throw new APIException(400401);
         }

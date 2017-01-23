@@ -10,4 +10,14 @@ class Task extends \Illuminate\Database\Eloquent\Model
     
     protected $table = 'task';
     protected $dates = ['deleted_at'];
+    
+    public function creator()
+    {
+        return $this->belongsTo('Inextends\Tamandua\Models\User', 'creator_id');
+    }
+    
+    public function assignee()
+    {
+        return $this->belongsTo('Inextends\Tamandua\Models\User', 'assigned_to_id');
+    }
 }

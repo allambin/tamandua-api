@@ -15,4 +15,9 @@ class Project extends \Illuminate\Database\Eloquent\Model
     {
         return $this->belongsTo('Inextends\Tamandua\Models\User', 'creator_id');
     }
+    
+    public function tasks()
+    {
+        return $this->hasMany('Inextends\Tamandua\Models\Task');
+    }
 }
