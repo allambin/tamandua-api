@@ -153,5 +153,40 @@ class TaskRepository
         
         return true;
     }
+    
+    /**
+     * 
+     * @param int $id
+     */
+    public function get($id) {
+        try {
+            $task = Task::with(['creator' => function($query) {
+                            $query->select(
+                                    'id', 'email'
+                                    );
+                        }])
+                    ->with(['project' => function($query) {
+                            $query->select(
+                                    'id', 'code', 'title', 'description'
+                                    );
+                        }])
+                    ->with(['assignee' => function($query) {
+                            $query->select(
+                                    'id', 'email'
+                                    );
+                        }])
+                    ->where('id', $id)
+                    ->firstOrFail();
+        } catch (\Exception $e) {
+            throw new APIException(400401);
+        }
+        
+        unset($task->creator_id);
+        unset($task->assigned_to_id);
+        unset($task->project_id);
+        unset($task->deleted_at);
+        
+        return $task;
+    }
 
 }

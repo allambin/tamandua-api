@@ -198,4 +198,17 @@ class APIController
             return ResponseHelper::sendJsonErrorResponse($response, $e);
         }
     }
+    
+    public function getTask(ServerRequestInterface $request, ResponseInterface $response, $args)
+    {
+        try {
+            $fieldsChecker = new RequiredFieldsChecker();
+            $fieldsChecker->check(['id' => 400205], $args);
+            $taskRepo = new TaskRepository();
+            $data = $taskRepo->get($args['id']);
+            return ResponseHelper::sendJsonResponse($response, $data);
+        } catch (\Exception $e) {
+            return ResponseHelper::sendJsonErrorResponse($response, $e);
+        }
+    }
 }

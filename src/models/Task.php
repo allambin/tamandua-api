@@ -20,4 +20,9 @@ class Task extends \Illuminate\Database\Eloquent\Model
     {
         return $this->belongsTo('Inextends\Tamandua\Models\User', 'assigned_to_id');
     }
+    
+    public function project()
+    {
+        return $this->belongsTo('Inextends\Tamandua\Models\Project');
+    }
 }

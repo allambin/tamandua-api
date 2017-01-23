@@ -53,6 +53,7 @@ $app->group('/api', function() use($app, $mw) {
     $app->post('/tasks', 'Inextends\Tamandua\APIController:createTask')->add($mw);
     $app->put('/tasks/{id:[0-9]+}', 'Inextends\Tamandua\APIController:updateTask')->add($mw);
     $app->delete('/tasks/{id:[0-9]+}', 'Inextends\Tamandua\APIController:deleteTask')->add($mw);
+    $app->get('/tasks/{id:[0-9]+}', 'Inextends\Tamandua\APIController:getTask');
 });
 
 $app->run();
