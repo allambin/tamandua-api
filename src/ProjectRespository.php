@@ -36,8 +36,16 @@ class ProjectRespository
                                     'start_date', 'due_date', 'created_at', 'updated_at', 'project_id', 
                                     'creator_id', 'assigned_to_id'
                                     )
-                                    ->with('creator')
-                                    ->with('assignee');
+                                    ->with(['creator' => function($query) {
+                                        $query->select(
+                                            'id', 'email'
+                                        );
+                                    }])
+                                    ->with(['assignee' => function($query) {
+                                        $query->select(
+                                            'id', 'email'
+                                        );
+                                    }]);
                         }])
                         ->where('id', $id)
                         ->firstOrFail();
