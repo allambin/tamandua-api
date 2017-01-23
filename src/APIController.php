@@ -181,4 +181,21 @@ class APIController
             return ResponseHelper::sendJsonErrorResponse($response, $e);
         }
     }
+    
+    public function deleteTask(ServerRequestInterface $request, ResponseInterface $response, $args)
+    {
+        $parsedBody = $request->getParsedBody();
+        $queryParams = (array) $request->getQueryParams();
+        $user = UserRepository::getCurrentUserFromToken($queryParams['auth_token']);
+
+        try {
+            $fieldsChecker = new RequiredFieldsChecker();
+            $fieldsChecker->check(['id' => 400205], $args);
+            $taskRepo = new TaskRepository();
+            $data = $taskRepo->delete($args['id'], $user);
+            return ResponseHelper::sendJsonResponse($response, $data);
+        } catch (\Exception $e) {
+            return ResponseHelper::sendJsonErrorResponse($response, $e);
+        }
+    }
 }
